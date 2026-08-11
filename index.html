@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Central de Streaming - IdealTech</title>
+  <title>Central Play - IdealTech</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { 
@@ -70,7 +70,29 @@
     .btn-destaque { background: #1e3a8a; border-color: #3b82f6; }
     .btn-destaque:hover { background: #2563eb; }
 
-    /* Botão Voltar */
+    /* Botão Voltar ao Hub (Estilo idêntico ao de OS) */
+    .btn-back {
+      display: inline-block;
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #475569;
+      background-color: transparent;
+      color: #94a3b8;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .btn-back:hover {
+      background-color: #334155;
+      color: #fff;
+      border-color: #64748b;
+    }
+
+    /* Botão Voltar Interno */
     .btn-voltar { 
       background: transparent; 
       color: #94a3b8; 
@@ -129,7 +151,7 @@
 <body>
 
 <div class="card">
-  <!-- CABEÇALHO FIXO (Fica por fora do trocador de telas) -->
+  <!-- CABEÇALHO FIXO -->
   <div class="logo">IDEAL<span>TECH</span></div>
   <div class="sub-logo">CENTRAL DE STREAMING</div>
 
@@ -144,6 +166,9 @@
       <button class="btn" onclick="mudarTela('tela-renovar')"><span>4. Renovar Assinatura</span> 💳</button>
       <button class="btn" onclick="mudarTela('tela-faq')"><span>5. Solução de Problemas / Ajuda</span> 🛠️</button>
       <a class="btn" href="https://wa.me/5547996315851?text=Olá!%20Preciso%20de%20atendimento." target="_blank"><span>6. Falar com Suporte</span> 💬</a>
+
+      <!-- Botão Voltar para o Hub Principal -->
+      <a href="https://idealtech.srv.br" class="btn-back">← Voltar para o Início</a>
     </div>
 
     <!-- ================= TELA 1: PLANOS ================= -->
@@ -297,7 +322,6 @@
 </div>
 
 <script>
-  // Função corrigida: esconde apenas as telas com a classe .conteudo-tela
   function mudarTela(idTela) {
     const telas = document.querySelectorAll('.conteudo-tela');
     telas.forEach(tela => tela.classList.add('escondido'));
