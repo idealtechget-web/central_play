@@ -14,19 +14,32 @@
       display: flex; 
       justify-content: center; 
       align-items: center;
-      padding: 20px; 
+      padding: 15px; 
     }
+    
     .card { 
       background: #141d2d; 
       width: 100%; 
-      max-width: 420px; 
-      padding: 25px; 
+      max-width: 440px; 
+      height: 90vh; 
+      max-height: 680px;
+      padding: 20px; 
       border-radius: 16px; 
       border: 1px solid #1e2a3e; 
       box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
     
-    /* Cabeçalho Fixo */
+    /* CABEÇALHO FIXO + BOTÃO VOLTAR FIXO */
+    .header-fixo {
+      flex-shrink: 0;
+      border-bottom: 1px solid #1e2a3e;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+
     .logo { 
       font-weight: 800; 
       font-size: 1.8em; 
@@ -40,11 +53,42 @@
       font-size: 0.65em; 
       letter-spacing: 4px; 
       color: #64748b; 
-      margin-bottom: 25px; 
       font-weight: 600; 
       text-transform: uppercase; 
       text-align: center; 
+      margin-bottom: 8px;
     }
+
+    /* Botão Voltar Fixo no Cabeçalho */
+    .btn-voltar-fixo { 
+      background: #0d1524; 
+      color: #94a3b8; 
+      border: 1px solid #1e2a3e; 
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer; 
+      font-size: 0.8em; 
+      font-weight: 700; 
+      display: block; 
+      text-transform: uppercase; 
+      letter-spacing: 1px; 
+      width: 100%;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .btn-voltar-fixo:hover { color: #3b82f6; border-color: #3b82f6; }
+
+    /* CONTAINER COM ROLAGEM APENAS DO CONTEÚDO */
+    .area-rolagem {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+
+    .area-rolagem::-webkit-scrollbar { width: 6px; }
+    .area-rolagem::-webkit-scrollbar-track { background: #0d1524; border-radius: 4px; }
+    .area-rolagem::-webkit-scrollbar-thumb { background: #233146; border-radius: 4px; }
+    .area-rolagem::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
 
     /* Botões Padrão IdealTech */
     .btn { 
@@ -52,12 +96,12 @@
       align-items: center; 
       justify-content: space-between; 
       width: 100%; 
-      padding: 13px 16px; 
+      padding: 14px 16px; 
       margin-bottom: 10px; 
       background: #233146; 
       color: #ffffff; 
-      font-weight: 600; 
-      font-size: 0.88em; 
+      font-weight: 700; 
+      font-size: 0.9em; 
       border: 1px solid #33435c; 
       border-radius: 8px; 
       cursor: pointer; 
@@ -70,66 +114,60 @@
     .btn-destaque { background: #1e3a8a; border-color: #3b82f6; }
     .btn-destaque:hover { background: #2563eb; }
 
-    /* Botão Voltar ao Hub (Estilo idêntico ao de OS) */
-    .btn-back {
-      display: inline-block;
-      width: 100%;
-      margin-top: 10px;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #475569;
-      background-color: transparent;
+    .btn-disabled {
+      opacity: 0.5;
+      cursor: default;
+      border-color: #1e293b;
+      background: #111a2e;
+    }
+    .btn-disabled:hover {
+      background: #111a2e;
+      border-color: #1e293b;
+    }
+
+    .btn-esqueci-dados {
+      background: transparent;
+      border: 1px dashed #475569;
       color: #94a3b8;
-      font-size: 14px;
-      font-weight: 600;
-      text-decoration: none;
+      font-size: 0.8em;
+      padding: 10px;
+      border-radius: 8px;
       text-align: center;
-      transition: all 0.2s;
+      width: 100%;
+      cursor: pointer;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      display: block;
+      text-decoration: none;
     }
-    .btn-back:hover {
-      background-color: #334155;
-      color: #fff;
-      border-color: #64748b;
-    }
+    .btn-esqueci-dados:hover { border-color: #3b82f6; color: #fff; }
 
-    /* Botão Voltar Interno */
-    .btn-voltar { 
-      background: transparent; 
-      color: #94a3b8; 
-      border: none; 
-      cursor: pointer; 
-      font-size: 0.8em; 
-      font-weight: 700; 
-      margin-bottom: 15px; 
-      display: inline-block; 
-      text-transform: uppercase; 
-      letter-spacing: 1px; 
-    }
-    .btn-voltar:hover { color: #3b82f6; }
-
-    /* Caixas Informativas */
+    /* Caixas Informativas e Cards */
     .box-info { 
       background: #0d1524; 
       border-left: 3px solid #3b82f6; 
-      padding: 12px; 
+      padding: 14px; 
       border-radius: 6px; 
-      margin: 15px 0; 
-      font-size: 0.85em; 
+      margin: 12px 0; 
+      font-size: 0.9em; 
       color: #cbd5e1; 
-      line-height: 1.5; 
+      line-height: 1.6; 
     }
+    .box-info strong { color: #ffffff; }
 
-    .box-aviso-teste {
-      background: #0f2744;
-      border: 1px solid #1d4ed8;
-      padding: 12px;
+    .card-app-servidor {
+      background: #0d1524;
+      border: 1px solid #233146;
       border-radius: 8px;
-      margin-top: 20px;
-      margin-bottom: 10px;
-      font-size: 0.82em;
-      color: #e2e8f0;
-      text-align: center;
-      line-height: 1.4;
+      padding: 14px;
+      margin-bottom: 15px;
+    }
+    .card-app-servidor h4 {
+      color: #3b82f6;
+      font-size: 1.05em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     input[type="text"] { 
@@ -139,7 +177,7 @@
       border: 1px solid #28374d; 
       background: #0d1524; 
       color: #fff; 
-      font-size: 0.95em; 
+      font-size: 1em; 
       outline: none; 
       text-align: center; 
       margin-bottom: 10px; 
@@ -152,114 +190,414 @@
 
 <div class="card">
   <!-- CABEÇALHO FIXO -->
-  <div class="logo">IDEAL<span>TECH</span></div>
-  <div class="sub-logo">CENTRAL DE STREAMING</div>
+  <div class="header-fixo">
+    <div class="logo">IDEAL<span>TECH</span></div>
+    <div class="sub-logo">CENTRAL DE STREAMING</div>
 
-  <!-- CONTAINER DE TELAS -->
-  <div id="container-telas">
+    <!-- Botão Voltar Fixo no Topo -->
+    <button id="btn-voltar-topo" class="btn-voltar-fixo escondido" onclick="voltarTelaAnterior()">← Voltar</button>
+  </div>
 
-    <!-- ================= MENU PRINCIPAL (Nível 1) ================= -->
-    <div id="tela-principal" class="conteudo-tela">
-      <button class="btn" onclick="mudarTela('tela-planos')"><span>1. Informações e Planos</span> ➔</button>
-      <button class="btn" onclick="mudarTela('tela-apps')"><span>2. Baixar Aplicativos</span> ➔</button>
-      <button class="btn" onclick="mudarTela('tela-solicitar-teste')"><span>3. Solicitar Acesso / Teste</span> 🚀</button>
-      <button class="btn" onclick="mudarTela('tela-renovar')"><span>4. Renovar Assinatura</span> 💳</button>
-      <button class="btn" onclick="mudarTela('tela-faq')"><span>5. Solução de Problemas / Ajuda</span> 🛠️</button>
-      <a class="btn" href="https://wa.me/5547996315851?text=Olá!%20Preciso%20de%20atendimento." target="_blank"><span>6. Falar com Suporte</span> 💬</a>
+  <!-- ÁREA COM ROLAGEM APENAS PARA O CONTEÚDO -->
+  <div class="area-rolagem">
+    <div id="container-telas">
 
-      <!-- Botão Voltar para o Hub Principal -->
-      <a href="https://idealtech.srv.br" class="btn-back">← Voltar para o Início</a>
-    </div>
-
-    <!-- ================= TELA 1: PLANOS ================= -->
-    <div id="tela-planos" class="conteudo-tela escondido">
-      <button class="btn-voltar" onclick="mudarTela('tela-principal')">← Voltar ao Menu</button>
-      <h3 style="font-size: 1.1em; margin-bottom: 10px;">Como Funciona e Planos</h3>
-      <div class="box-info">
-        • <strong>Conteúdo Completo:</strong> Canais ao vivo, Filmes e Séries atualizados.<br><br>
-        • <strong>Telas Simultâneas:</strong> Assista no celular e TV ao mesmo tempo.<br><br>
-        • <strong>Sem Fidelidade:</strong> Teste grátis antes de contratar!
-      </div>
-      
-      <button class="btn btn-destaque" onclick="mudarTela('tela-apps')" style="margin-top: 15px; justify-content: center;">
-        PASSO 2: ESCOLHER SEU APLICATIVO ➔
-      </button>
-    </div>
-
-    <!-- ================= TELA 2: APLICATIVOS (Nível 2) ================= -->
-    <div id="tela-apps" class="conteudo-tela escondido">
-      <button class="btn-voltar" onclick="mudarTela('tela-principal')">← Voltar ao Menu</button>
-      <h3 style="font-size: 1.1em; margin-bottom: 10px;">Escolha seu Dispositivo</h3>
-      <button class="btn" onclick="mudarTela('app-android')"><span>Android / TV Box</span> ➔</button>
-      <button class="btn" onclick="mudarTela('app-roku')"><span>Roku TV</span> ➔</button>
-      <button class="btn" onclick="mudarTela('app-samsung-lg')"><span>Smart TV LG / Samsung</span> ➔</button>
-    </div>
-
-    <!-- SUBTELA: APP ANDROID -->
-    <div id="app-android" class="conteudo-tela escondido">
-      <button class="btn-voltar" onclick="mudarTela('tela-apps')">← Voltar aos Dispositivos</button>
-      <h3 style="font-size: 1.1em; margin-bottom: 10px;">Apps para Android / TV Box</h3>
-      
-      <a class="btn" href="LINK_DO_APK_1" target="_blank"><span>1. Baixar Blessed Play (Direct)</span> 📥</a>
-      <a class="btn" href="LINK_DO_APK_2" target="_blank"><span>2. Baixar Vision Play</span> 📥</a>
-
-      <div class="box-aviso-teste">
-        ⚠️ <strong>Já baixou e instalou o aplicativo?</strong><br>
-        Clique no botão abaixo para ir à área de solicitação:
-      </div>
-      <button class="btn btn-destaque" onclick="mudarTela('tela-solicitar-teste')" style="justify-content: center;">
-        🚀 SOLICITAR ACESSO / TESTE AGORA
-      </button>
-    </div>
-
-    <!-- SUBTELA: ROKU -->
-    <div id="app-roku" class="conteudo-tela escondido">
-      <button class="btn-voltar" onclick="mudarTela('tela-apps')">← Voltar aos Dispositivos</button>
-      <h3 style="font-size: 1.1em; margin-bottom: 10px;">Roku TV</h3>
-      <div class="box-info">
-        Procure pelo aplicativo <strong>Roku Player</strong> na loja da sua Smart TV Roku e insira o DNS fornecido pelo nosso suporte.
+      <!-- ================= MENU PRINCIPAL (Nível 1) ================= -->
+      <div id="tela-principal" class="conteudo-tela">
+        <button class="btn" onclick="mudarTela('tela-planos', 'tela-principal')"><span>1. Informações e Planos</span> ➔</button>
+        <button class="btn" onclick="mudarTela('tela-apps', 'tela-principal')"><span>2. Baixar Aplicativos</span> ➔</button>
+        <button class="btn" onclick="mudarTela('tela-solicitar-teste', 'tela-principal')"><span>3. Possuo Código de Indicação</span> 🎁</button>
+        <button class="btn" onclick="mudarTela('tela-renovar', 'tela-principal')"><span>4. Renovar / Consultar Usuário</span> 💳</button>
+        <button class="btn btn-disabled"><span>5. Solução de Problemas / Ajuda</span> 🛠️ (Em Breve)</button>
+        <a class="btn" href="https://wa.me/5547996315851?text=Olá!%20Preciso%20de%20atendimento." target="_blank"><span>6. Falar com Suporte</span> 💬</a>
       </div>
 
-      <div class="box-aviso-teste">
-        ⚠️ <strong>Já localizou o app na sua TV?</strong><br>
-        Clique abaixo para avançar ao pedido de acesso:
+      <!-- ================= TELA 1: INFORMAÇÕES E PLANOS ================= -->
+      <div id="tela-planos" class="conteudo-tela escondido">
+        <p style="font-size: 0.95em; color: #cbd5e1; margin-bottom: 12px; line-height: 1.5;">
+          Olá! Tudo bem?<br>
+          Quero te apresentar um serviço de streaming pensado para quem busca <strong>qualidade, estabilidade e preço justo</strong>, sem complicações.
+        </p>
+
+        <div class="box-info">
+          <h4 style="color: #3b82f6; margin-bottom: 8px; font-size: 1em; text-transform: uppercase;">✨ Como funciona:</h4>
+          
+          <p style="margin-bottom: 10px;">
+            🚀 <strong>Teste antes de contratar:</strong><br>
+            Envio o aplicativo ideal para o seu dispositivo e libero um acesso gratuito na hora, para você conferir a qualidade do serviço com tranquilidade.
+          </p>
+
+          <p style="margin-bottom: 10px;">
+            🎬 <strong>Escolha seu conteúdo:</strong><br>
+            O valor é o mesmo — você só escolhe o perfil que mais combina com você:
+            <br>• 🔞 <strong>Plano Completo:</strong> Canais, filmes, séries + conteúdo adulto.
+            <br>• 👨‍👩‍👧 <strong>Plano Kids/Família:</strong> Canais, filmes e séries sem conteúdo adulto.
+          </p>
+
+          <p style="margin-bottom: 10px;">
+            📱 <strong>Onde assistir:</strong><br>
+            Compatível com Smart TVs, celulares, TV Box, computadores e tablets.
+          </p>
+
+          <p style="margin-bottom: 10px; background: rgba(239, 68, 68, 0.1); padding: 8px; border-radius: 6px; border: 1px solid rgba(239, 68, 68, 0.3);">
+            ⚠️ <strong>Atenção:</strong><br>
+            O plano padrão permite 1 dispositivo por vez. Para uso em telas simultâneas, consulte nossos descontos especiais para 2 ou 3 licenças.
+          </p>
+
+          <p style="margin-bottom: 10px;">
+            💰 <strong>Planos e valores:</strong><br>
+            • 🗓️ Mensal (1 tela simultânea): <strong>R$ 24,90</strong><br>
+            • 🗓️ Mensal (2 telas simultâneas): <strong>R$ 34,90</strong><br>
+            • 🗓️ Mensal (3 telas simultâneas): <strong>R$ 45,00</strong>
+          </p>
+
+          <p>
+            💳 Para você não perder nada, o pagamento pode ser feito via link com <strong>liberação automática e imediata</strong>. Também aceitamos PIX e Boleto.<br><br>
+            Após o teste, a renovação pode ser feita automaticamente via link ou através da chave PIX e envio do comprovante.
+          </p>
+        </div>
+        
+        <button class="btn btn-destaque" onclick="mudarTela('tela-apps', 'tela-planos')" style="margin-top: 15px; justify-content: center;">
+          PASSO 2: ESCOLHER SEU APLICATIVO ➔
+        </button>
       </div>
-      <button class="btn btn-destaque" onclick="mudarTela('tela-solicitar-teste')" style="justify-content: center;">
-        🚀 SOLICITAR ACESSO / TESTE AGORA
-      </button>
-    </div>
 
-    <!-- SUBTELA: SAMSUNG / LG -->
-    <div id="app-samsung-lg" class="conteudo-tela escondido">
-      <button class="btn-voltar" onclick="mudarTela('tela-apps')">← Voltar aos Dispositivos</button>
-      <h3 style="font-size: 1.1em; margin-bottom: 10px;">LG / Samsung / Toshiba</h3>
-      <div class="box-info">
-        Abra a loja de aplicativos da sua TV e pesquise por:<br><br>
-        👉 <strong>IBO PLAYER</strong> ou <strong>BOB PLAYER</strong>
+      <!-- ================= TELA 2: INSTALAÇÃO DE APLICATIVO (Por Dispositivo) ================= -->
+      <div id="tela-apps" class="conteudo-tela escondido">
+        <p style="font-size: 0.9em; color: #cbd5e1; margin-bottom: 10px; font-weight: 600;">📲 Instalação de aplicativo</p>
+        <h3 style="font-size: 1.1em; margin-bottom: 15px; color: #3b82f6;">Onde você vai assistir?</h3>
+
+        <button class="btn" onclick="mudarTela('app-smart-tv', 'tela-apps')"><span>📺 Smart TV</span> ➔</button>
+        <button class="btn" onclick="mudarTela('app-tvbox', 'tela-apps')"><span>📦 TV Box / Android TV</span> ➔</button>
+        <button class="btn" onclick="mudarTela('app-android-mobile', 'tela-apps')"><span>📱 Celular Android</span> ➔</button>
+        <button class="btn" onclick="mudarTela('app-iphone', 'tela-apps')"><span>🍎 iPhone (iOS)</span> ➔</button>
+        <button class="btn" onclick="mudarTela('app-pc', 'tela-apps')"><span>💻 Computador / Notebook</span> ➔</button>
+
+        <!-- Atalho direto para consultar o usuário existente -->
+        <button class="btn-esqueci-dados" onclick="mudarTela('tela-renovar', 'tela-apps')">
+          🔍 Já é cliente? Clique aqui para consultar seus acessos
+        </button>
       </div>
 
-      <div class="box-aviso-teste">
-        ⚠️ <strong>Já baixou o app na sua Smart TV?</strong><br>
-        Clique abaixo para solicitar seu teste grátis:
+      <!-- SUBTELA: SMART TV (SELEÇÃO DE MARCA) -->
+      <div id="app-smart-tv" class="conteudo-tela escondido">
+        <h3 style="font-size: 1.1em; margin-bottom: 5px; color: #3b82f6;">📺 Smart TV</h3>
+        <p style="font-size: 0.85em; color: #94a3b8; margin-bottom: 15px;">Qual é a marca da sua TV?</p>
+
+        <button class="btn" onclick="mudarTela('smart-tv-marcas', 'app-smart-tv')"><span>LG, Philco, Samsung ou outra marca</span> ➔</button>
+        <button class="btn" onclick="mudarTela('smart-tv-roku', 'app-smart-tv')"><span>Roku</span> ➔</button>
       </div>
-      <button class="btn btn-destaque" onclick="mudarTela('tela-solicitar-teste')" style="justify-content: center;">
-        🚀 SOLICITAR ACESSO / TESTE AGORA
-      </button>
-    </div>
 
-    <!-- ================= TELA 3: SOLICITAR ACESSO / INDICAÇÃO ================= -->
-    <div id="tela-solicitar-teste" class="conteudo-tela escondido">
-      <button class="btn-voltar" onclick="mudarTela('tela-principal')">← Voltar ao Menu</button>
-      <h3 style="font-size: 1.1em; margin-bottom: 10px;">Solicitar Seu Acesso</h3>
-      
-      <a class="btn btn-destaque" href="https://wa.me/5547996315851?text=3" target="_blank" style="justify-content: center; margin-bottom: 20px;">
-        🚀 GERAR TESTE GRÁTIS DIRETO
-      </a>
+      <!-- DETALHE: LG / PHILCO / SAMSUNG / OUTRAS -->
+      <div id="smart-tv-marcas" class="conteudo-tela escondido">
+        <h3 style="font-size: 1.05em; margin-bottom: 12px; color: #3b82f6;">LG / Philco / Samsung ou outra marca</h3>
 
-      <div style="border-top: 1px solid #28374d; padding-top: 15px; margin-top: 15px;">
-        <h4 style="font-size: 0.88em; color: #3b82f6; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px;">Tem Indicação de um Amigo?</h4>
-        <p style="font-size: 0.8em; color: #94a3b8; margin-bottom: 12px;">
-          Digite o código fornecido pelo seu amigo para solicitar seu acesso com desconto:
+        <!-- CARD 1: ABSOLUTO PLAYER -->
+        <div class="card-app-servidor">
+          <h4>⭐ 1. ABSOLUTO Player</h4>
+          <p style="font-size: 0.85em; color: #cbd5e1; margin-bottom: 10px; line-height: 1.5;">
+            <strong>Siga o passo a passo:</strong><br>
+            1️⃣ Abra a loja de aplicativos da sua TV<br>
+            2️⃣ Procure por: <strong>ABSOLUTO Player</strong><br>
+            3️⃣ Instale o aplicativo
+          </p>
+
+          <p style="font-size: 0.8em; color: #94a3b8; background: #070d18; padding: 8px; border-radius: 6px; margin-bottom: 10px;">
+            🔐 <strong>Dados de acesso:</strong><br>
+            Provedor: <code>slim</code><br>
+            Usuário e Senha: <i>(enviados após a solicitação do teste)</i>
+          </p>
+
+          <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 8px; border-radius: 6px; font-size: 0.78em; color: #fca5a5; margin-bottom: 12px;">
+            ⚠️ <strong>IMPORTANTE:</strong> No primeiro acesso pode aparecer uma mensagem de erro.<br>
+            👉 Feche o aplicativo e abra novamente.<br>
+            ✔️ A lista de canais carregará normalmente.
+          </div>
+
+          <!-- APP ALTERNATIVO EASY -->
+          <div style="border-top: 1px solid #1e2a3e; padding-top: 10px; margin-top: 10px; margin-bottom: 12px;">
+            <p style="font-size: 0.82em; color: #cbd5e1; line-height: 1.4;">
+              📌 <strong>Aplicativo alternativo: Easy Player</strong><br>
+              Código: <code>slim01</code><br>
+              Usuário/Senha: <i>(enviado após a solicitação)</i>
+            </p>
+          </div>
+
+          <a class="btn btn-destaque" href="https://wa.me/5547996315851?text=Teste%20-%20SlimTV" target="_blank" style="justify-content: center;">
+            🚀 SOLICITAR TESTE - ABSOLUTO / EASY
+          </a>
+        </div>
+
+        <!-- CARD 2: BLESSED PLAYER -->
+        <div class="card-app-servidor">
+          <h4>🎬 2. Blessed Player</h4>
+          <p style="font-size: 0.85em; color: #cbd5e1; margin-bottom: 10px;">
+            Procure por <strong>Blessed Player</strong> na loja de aplicativos da sua Smart TV.
+          </p>
+
+          <a class="btn btn-destaque" href="https://wa.me/5547996315851?text=Teste%20-%20TremFlix" target="_blank" style="justify-content: center;">
+            🚀 SOLICITAR TESTE - BLESSED PLAYER
+          </a>
+        </div>
+      </div>
+
+      <!-- DETALHE: ROKU -->
+      <div id="smart-tv-roku" class="conteudo-tela escondido">
+        <h3 style="font-size: 1.05em; margin-bottom: 12px; color: #3b82f6;">Roku</h3>
+
+        <div class="card-app-servidor">
+          <h4>⭐ ABSOLUTO Player (Roku)</h4>
+          <p style="font-size: 0.85em; color: #cbd5e1; margin-bottom: 10px; line-height: 1.5;">
+            1️⃣ Acesse a loja de canais da sua Roku TV<br>
+            2️⃣ Procure por: <strong>ABSOLUTO Player</strong><br>
+            3️⃣ Instale o aplicativo
+          </p>
+
+          <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 8px; border-radius: 6px; font-size: 0.78em; color: #fca5a5; margin-bottom: 12px;">
+            ⚠️ No 1º acesso pode aparecer uma mensagem de erro. Feche o app e abra novamente para carregar os canais.
+          </div>
+
+          <a class="btn btn-destaque" href="https://wa.me/5547996315851?text=Teste%20-%20SlimTV" target="_blank" style="justify-content: center;">
+            🚀 SOLICITAR TESTE - ROKU TV
+          </a>
+        </div>
+      </div>
+
+      <!-- SUBTELA: TV BOX / ANDROID TV -->
+      <div id="app-tvbox" class="conteudo-tela escondido">
+        <h3 style="font-size: 1.1em; margin-bottom: 5px; color: #3b82f6;">📦 TV Box / Android TV</h3>
+        <p style="font-size: 0.85em; color: #94a3b8; margin-bottom: 15px;">Escolha como deseja instalar:</p>
+
+        <button class="btn" onclick="mudarTela('tvbox-navegador', 'app-tvbox')"><span>🌐 1. Pelo Navegador (Mais Fácil)</span> ➔</button>
+        <button class="btn" onclick="mudarTela('tvbox-downloader', 'app-tvbox')"><span>📥 2. App Downloader (Códigos)</span> ➔</button>
+        <button class="btn" onclick="mudarTela('tvbox-ntdown', 'app-tvbox')"><span>📥 3. App ntDown</span> ➔</button>
+        <button class="btn" onclick="mudarTela('tvbox-m7', 'app-tvbox')"><span>📥 4. M7 Downloads</span> ➔</button>
+        <button class="btn" onclick="mudarTela('tvbox-webplayer', 'app-tvbox')"><span>🌐 5. WebPlayer (Assistir no Browser)</span> ➔</button>
+      </div>
+
+      <!-- TVBOX DETALHE 1: NAVEGADOR -->
+      <div id="tvbox-navegador" class="conteudo-tela escondido">
+        <h3 style="font-size: 1.05em; margin-bottom: 10px; color: #3b82f6;">🌐 Instalação pelo Navegador</h3>
+
+        <div class="card-app-servidor">
+          <h4>🎬 1. Recomendados (Tremflix)</h4>
+          <a class="btn" href="https://gera.bio/tfpro" target="_blank"><span>TremFlix PRO</span> 📥</a>
+          <a class="btn" href="https://gera.bio/tflite" target="_blank"><span>TremFlix LITE</span> 📥</a>
+          <a class="btn" href="https://bit.ly/ibopremium1" target="_blank"><span>IBO Premium</span> 📥</a>
+          <a class="btn" href="https://bit.ly/iiibo4k" target="_blank"><span>IBO 4K</span> 📥</a>
+          <a class="btn" href="https://dl.ntdev.in/13411" target="_blank"><span>Bazinga Play</span> 📥</a>
+          <a class="btn" href="https://bit.ly/youpro1" target="_blank"><span>YouCine PRO</span> 📥</a>
+
+          <a class="btn btn-destaque" href="https://wa.me/5547996315851?text=Teste%20-%20TremFlix" target="_blank" style="justify-content: center; margin-top: 10px;">
+            🚀 SOLICITAR TESTE - TREMFLIX
+          </a>
+        </div>
+
+        <div class="card-app-servidor">
+          <h4>⭐ 2. Recomendados (Slim)</h4>
+          <a class="btn" href="http://appslim.cc/smart" target="_blank"><span>Slim Smart (Principal)</span> 📥</a>
+          <a class="btn" href="http://appslim.cc/bin" target="_blank"><span>Slim Binstream</span> 📥</a>
+          <a class="btn" href="http://appslim.cc/flix" target="_blank"><span>Slim NexTV (Flix)</span> 📥</a>
+          <a class="btn" href="http://appslim.cc/fast" target="_blank"><span>SlimTV Fast 1.18</span> 📥</a>
+          <a class="btn" href="http://appslim.cc/ibo" target="_blank"><span>Slim Ibo</span> 📥</a>
+          <a class="btn" href="http://appslim.cc/xc" target="_blank"><span>Slim XC / XCIPTV</span> 📥</a>
+
+          <a class="btn btn-destaque" href="https://wa.me/5547996315851?text=Teste%20-%20SlimTV" target="_blank" style="justify-content: center; margin-top: 10px;">
+            🚀 SOLICITAR TESTE - SLIM
+          </a>
+        </div>
+      </div>
+
+      <!-- TVBOX DETALHE 2: DOWNLOADER -->
+      <div id="tvbox-downloader" class="conteudo-tela escondido">
+        <h3 style="font-size: 1.05em; margin-bottom: 8px; color: #3b82f6;">📥 App Downloader</h3>
+
+        <div class="card-app-servidor">
+          <h4>🎬 Códigos Tremflix (Recomendados)</h4>
+          <div style="font-size: 0.85em; color: #cbd5e1; line-height: 1.8; background: #070d18; padding: 10px; border-radius: 6px; margin-bottom: 10px; font-family: monospace;">
+            • <strong>9602872</strong> - Blessed Player (Principal)<br>
+            • <strong>6390937</strong> - Blessed Player (Alt)<br>
+            • <strong>1589556</strong> - TremFlix PRO<br>
+            • <strong>5992086</strong> - TremFlix Lite<br>
+            • <strong>8951108</strong> - TremFlix 2.0<br>
+            • <strong>5808022</strong> - Bazinga Play<br>
+            • <strong>4371699</strong> - IBO Premium<br>
+            • <strong>1537733</strong> - IBO 4k<br>
+            • <strong>5346344</strong> - YouCine PRO
+          </div>
+
+          <a class="btn btn-destaque" href="https://wa.me/5547996315851?text=Teste%20-%20TremFlix" target="_blank" style="justify-content: center;">
+            🚀 SOLICITAR TESTE - TREMFLIX
+          </a>
+        </div>
+
+        <div class="card-app-servidor">
+          <h4>⭐ Códigos Slim</h4>
+          <div style="font-size: 0.85em; color: #cbd5e1; line-height: 1.8; background: #070d18; padding: 10px; border-radius: 6px; margin-bottom: 10px; font-family: monospace;">
+            • <strong>8659974</strong> - Slim Smart (Recomendado)<br>
+            • <strong>8857881</strong> - Slim Binstream<br>
+            • <strong>4788756</strong> - Slim Flix<br>
+            • <strong>8644673</strong> - SlimTV Fast 1.18<br>
+            • <strong>3718531</strong> - Slim Ibo<br>
+            • <strong>5897858</strong> - Slim XC Light / XCIPTV<br>
+            • <strong>4322736</strong> - VPN
+          </div>
+
+          <a class="btn btn-destaque" href="https://wa.me/5547996315851?text=Teste%20-%20SlimTV" target="_blank" style="justify-content: center;">
+            🚀 SOLICITAR TESTE - SLIM
+          </a>
+        </div>
+      </div>
+
+      <!-- TVBOX DETALHE 3: NTDOWN -->
+      <div id="tvbox-ntdown" class="conteudo-tela escondido">
+        <h3 style="font-size: 1.05em; margin-bottom: 8px; color: #3b82f6;">📥 App ntDown</h3>
+
+        <div class="card-app-servidor">
+          <div style="font-size: 0.85em; color: #cbd5e1; line-height: 1.8; background: #070d18; padding: 10px; border-radius: 6px; margin-bottom: 12px; font-family: monospace;">
+            • <strong>13763</strong> - Slim Smart (Recomendado)<br>
+            • <strong>61656</strong> - Slim Binstream<br>
+            • <strong>23328</strong> - Slim Flix<br>
+            • <strong>35898</strong> - SlimTV Fast 1.18<br>
+            • <strong>77776</strong> - Slim Ibo<br>
+            • <strong>24764</strong> - Slim XC Light / XCIPTV<br>
+            • <strong>29252</strong> - VPN
+          </div>
+
+          <a class="btn btn-destaque" href="https://wa.me/5547996315851?text=Teste%20-%20SlimTV" target="_blank" style="justify-content: center;">
+            🚀 SOLICITAR TESTE SLIM
+          </a>
+        </div>
+      </div>
+
+      <!-- TVBOX DETALHE 4: M7 DOWNLOADS -->
+      <div id="tvbox-m7" class="conteudo-tela escondido">
+        <h3 style="font-size: 1.05em; margin-bottom: 8px; color: #3b82f6;">📥 M7 Downloads</h3>
+
+        <div class="card-app-servidor">
+          <div style="font-size: 0.85em; color: #cbd5e1; line-height: 1.8; background: #070d18; padding: 10px; border-radius: 6px; margin-bottom: 12px; font-family: monospace;">
+            • <strong>6</strong> - Slim Smart (Recomendado)<br>
+            • <strong>4</strong> - Slim XC / XCIPTV<br>
+            • <strong>100</strong> - Slim Ibo<br>
+            • <strong>5</strong> - Slim Smarters V4 (IPTV Smarters)
+          </div>
+
+          <a class="btn btn-destaque" href="https://wa.me/5547996315851?text=Teste%20-%20SlimTV" target="_blank" style="justify-content: center;">
+            🚀 SOLICITAR TESTE SLIM
+          </a>
+        </div>
+      </div>
+
+      <!-- TVBOX DETALHE 5: WEBPLAYER -->
+      <div id="tvbox-webplayer" class="conteudo-tela escondido">
+        <h3 style="font-size: 1.05em; margin-bottom: 8px; color: #3b82f6;">🌐 WebPlayer</h3>
+
+        <div class="card-app-servidor">
+          <a class="btn" href="https://webplayertremflix.online/" target="_blank" style="margin-bottom: 8px;"><span>WebPlayer TremFlix</span> 🌐</a>
+          <a class="btn btn-destaque" href="https://wa.me/5547996315851?text=Teste%20-%20TremFlix" target="_blank" style="justify-content: center; margin-bottom: 15px;">
+            🚀 TESTE WEB - TREMFLIX
+          </a>
+
+          <a class="btn" href="http://01.webplayer.top" target="_blank" style="margin-bottom: 8px;"><span>WebPlayer Slim</span> 🌐</a>
+          <a class="btn btn-destaque" href="https://wa.me/5547996315851?text=Teste%20-%20SlimTV" target="_blank" style="justify-content: center; background: #233146; border-color: #33435c;">
+            🚀 TESTE WEB - SLIM
+          </a>
+        </div>
+      </div>
+
+      <!-- SUBTELA: CELULAR ANDROID -->
+      <div id="app-android-mobile" class="conteudo-tela escondido">
+        <h3 style="font-size: 1.1em; margin-bottom: 5px; color: #3b82f6;">📱 Celular Android</h3>
+
+        <!-- 1. TREMFLIX (PRIMEIRO) -->
+        <div class="card-app-servidor">
+          <h4>⭐ 1. Servidor TremFlix (Recomendado)</h4>
+          <a class="btn" href="#" style="opacity: 0.6; cursor: default;"><span>Blessed Player (Em breve)</span> 📥</a>
+          <a class="btn" href="https://gera.bio/tfpro" target="_blank"><span>TremFlix PRO</span> 📥</a>
+          <a class="btn" href="https://gera.bio/tflite" target="_blank"><span>TremFlix LITE</span> 📥</a>
+          <a class="btn" href="https://bit.ly/ibopremium1" target="_blank"><span>IBO Premium</span> 📥</a>
+          <a class="btn" href="https://bit.ly/iiibo4k" target="_blank"><span>IBO 4K</span> 📥</a>
+          <a class="btn" href="https://dl.ntdev.in/13411" target="_blank"><span>Bazinga Play</span> 📥</a>
+          <a class="btn" href="https://bit.ly/youpro1" target="_blank"><span>YouCine PRO</span> 📥</a>
+
+          <a class="btn btn-destaque" href="https://wa.me/5547996315851?text=Teste%20-%20TremFlix" target="_blank" style="justify-content: center; margin-top: 10px;">
+            🚀 SOLICITAR TESTE - TREMFLIX
+          </a>
+        </div>
+
+        <!-- 2. SLIM -->
+        <div class="card-app-servidor">
+          <h4>🔹 2. Servidor Slim</h4>
+          <a class="btn" href="http://appslim.cc/smart" target="_blank"><span>Slim Smart (Recomendação 1)</span> 📥</a>
+          <a class="btn" href="http://appslim.cc/fast" target="_blank"><span>Slim P2P Americano (Recomendação 2)</span> 📥</a>
+          <a class="btn" href="http://appslim.cc/xc" target="_blank"><span>Slim XC (Recomendação 3)</span> 📥</a>
+          <a class="btn" href="http://appslim.cc/ibo" target="_blank"><span>Slim Ibo (Recomendação 4)</span> 📥</a>
+
+          <a class="btn btn-destaque" href="https://wa.me/5547996315851?text=Teste%20-%20SlimTV" target="_blank" style="justify-content: center; margin-top: 10px;">
+            🚀 SOLICITAR TESTE - SLIM
+          </a>
+        </div>
+      </div>
+
+      <!-- SUBTELA: IPHONE (iOS) -->
+      <div id="app-iphone" class="conteudo-tela escondido">
+        <h3 style="font-size: 1.1em; margin-bottom: 5px; color: #3b82f6;">🍎 iPhone (iOS)</h3>
+
+        <div class="card-app-servidor">
+          <h4>📲 Aplicativos na App Store</h4>
+          <p style="font-size: 0.85em; color: #cbd5e1; margin-bottom: 10px; line-height: 1.5;">
+            Abra a App Store e instale um dos apps:<br>
+            👉 <strong>IPTV Smarters</strong><br>
+            👉 <strong>IBO Player</strong><br>
+            👉 <strong>XCIPTV</strong>
+          </p>
+
+          <a class="btn btn-destaque" href="https://wa.me/5547996315851?text=Teste%20-%20TremFlix" target="_blank" style="justify-content: center; margin-bottom: 8px;">
+            🚀 SOLICITAR TESTE - TREMFLIX (iOS)
+          </a>
+          <a class="btn btn-destaque" href="https://wa.me/5547996315851?text=Teste%20-%20SlimTV" target="_blank" style="justify-content: center; background: #233146; border-color: #33435c;">
+            🚀 SOLICITAR TESTE - SLIM (iOS)
+          </a>
+        </div>
+
+        <div class="card-app-servidor">
+          <h4>🌐 Assista pelo Navegador (Safari)</h4>
+          <a class="btn" href="http://01.webplayer.top" target="_blank"><span>WebPlayer (Slim)</span> 🌐</a>
+        </div>
+      </div>
+
+      <!-- SUBTELA: COMPUTADOR / NOTEBOOK -->
+      <div id="app-pc" class="conteudo-tela escondido">
+        <h3 style="font-size: 1.1em; margin-bottom: 5px; color: #3b82f6;">💻 Computador / Notebook</h3>
+
+        <div class="card-app-servidor">
+          <h4>🌐 1. Webplayer no Navegador (Mais Prático)</h4>
+          <a class="btn" href="https://www.webplayertremflix.online/" target="_blank" style="margin-bottom: 8px;"><span>WebPlayer TremFlix</span> 🌐</a>
+          <a class="btn btn-destaque" href="https://wa.me/5547996315851?text=Teste%20-%20TremFlix" target="_blank" style="justify-content: center; margin-bottom: 15px;">
+            🚀 TESTE WEB - TREMFLIX
+          </a>
+
+          <a class="btn" href="http://01.webplayer.top" target="_blank" style="margin-bottom: 8px;"><span>WebPlayer Slim</span> 🌐</a>
+          <a class="btn btn-destaque" href="https://wa.me/5547996315851?text=Teste%20-%20SlimTV" target="_blank" style="justify-content: center; background: #233146; border-color: #33435c;">
+            🚀 TESTE WEB - SLIM
+          </a>
+        </div>
+
+        <div class="card-app-servidor">
+          <h4>💻 2. Programa para Windows</h4>
+          <a class="btn" href="http://appslim.cc/pc" target="_blank" style="margin-bottom: 8px;"><span>Baixar IPTV Smarters (PC)</span> 📥</a>
+          <a class="btn btn-destaque" href="https://wa.me/5547996315851?text=Teste%20-%20SlimTV" target="_blank" style="justify-content: center;">
+            🚀 SOLICITAR TESTE - PC SLIM
+          </a>
+        </div>
+      </div>
+
+      <!-- ================= TELA 3: APENAS CÓDIGO DE INDICAÇÃO ================= -->
+      <div id="tela-solicitar-teste" class="conteudo-tela escondido">
+        <h3 style="font-size: 1.1em; margin-bottom: 10px;">Desconto por Indicação</h3>
+        
+        <p style="font-size: 0.85em; color: #94a3b8; margin-bottom: 15px; line-height: 1.4;">
+          Possui o código de indicação enviado por um amigo? Digite abaixo para solicitar seu teste com desconto especial:
         </p>
 
         <input type="text" id="codigo-indicacao" placeholder="Digite seu código aqui" maxlength="9" oninput="validarCodigo()" style="letter-spacing: 2px;">
@@ -272,66 +610,64 @@
           SOLICITAR COM DESCONTO
         </a>
       </div>
-    </div>
 
-    <!-- ================= TELA 4: RENOVAÇÃO ================= -->
-    <div id="tela-renovar" class="conteudo-tela escondido">
-      <button class="btn-voltar" onclick="mudarTela('tela-principal')">← Voltar ao Menu</button>
-      <h3 style="font-size: 1.1em; margin-bottom: 5px;">Consultar Cliente</h3>
-      <p style="font-size: 0.8em; color: #94a3b8; margin-bottom: 15px;">Digite seu usuário para acessar a fatura do seu painel:</p>
+      <!-- ================= TELA 4: RENOVAÇÃO / CONSULTA DE USUÁRIO ================= -->
+      <div id="tela-renovar" class="conteudo-tela escondido">
+        <h3 style="font-size: 1.1em; margin-bottom: 5px;">Consultar Usuário / Renovação</h3>
+        <p style="font-size: 0.8em; color: #94a3b8; margin-bottom: 15px;">Digite seu usuário para acessar o painel de renovação e dados do seu app:</p>
 
-      <input type="text" id="input-usuario" placeholder="Digite seu código de usuário" style="letter-spacing: 2px;">
-      <button class="btn btn-destaque" onclick="buscarCliente()" style="justify-content: center;">PESQUISAR FATURA</button>
-    </div>
-
-    <!-- ================= TELA 5: FAQ / AJUDA POR APP ================= -->
-    <div id="tela-faq" class="conteudo-tela escondido">
-      <button class="btn-voltar" onclick="mudarTela('tela-principal')">← Voltar ao Menu</button>
-      <h3 style="font-size: 1.1em; margin-bottom: 10px;">Qual aplicativo você usa?</h3>
-      <button class="btn" onclick="mudarTela('faq-blessed')"><span>Blessed Play</span> ➔</button>
-      <button class="btn" onclick="mudarTela('faq-trenflix')"><span>Trenflix</span> ➔</button>
-    </div>
-
-    <!-- SUBTELA FAQ: BLESSED -->
-    <div id="faq-blessed" class="conteudo-tela escondido">
-      <button class="btn-voltar" onclick="mudarTela('tela-faq')">← Voltar aos Apps</button>
-      <h3 style="font-size: 1.1em; margin-bottom: 10px;">Ajuda - Blessed Play</h3>
-      <div class="box-info">
-        <strong>Erro ao carregar a lista?</strong><br><br>
-        1. Vá nas configurações do app.<br>
-        2. Clique em 'Atualizar Conteúdo'.<br>
-        3. Caso persistir, desligue o roteador da tomada por 30 segundos.
+        <input type="text" id="input-usuario" placeholder="Ex: 160837199">
+        <button class="btn btn-destaque" onclick="buscarCliente()" style="justify-content: center;">PESQUISAR PAINEL</button>
       </div>
-      <a class="btn" href="https://wa.me/5547996315851?text=Preciso%20de%20ajuda%20com%20o%20Blessed%20Play" target="_blank">Ainda não resolveu? Falar com Suporte</a>
-    </div>
 
-    <!-- SUBTELA FAQ: TRENFLIX -->
-    <div id="faq-trenflix" class="conteudo-tela escondido">
-      <button class="btn-voltar" onclick="mudarTela('tela-faq')">← Voltar aos Apps</button>
-      <h3 style="font-size: 1.1em; margin-bottom: 10px;">Ajuda - Trenflix</h3>
-      <div class="box-info">
-        <strong>Canais travando?</strong><br><br>
-        1. Verifique se sua TV está no Wi-Fi 5G ou cabo.<br>
-        2. Alterne o Servidor nas configurações do app para a Opção 2.
-      </div>
-      <a class="btn" href="https://wa.me/5547996315851?text=Preciso%20de%20ajuda%20com%20o%20Trenflix" target="_blank">Ainda não resolveu? Falar com Suporte</a>
-    </div>
-
-  </div> <!-- FIM DO CONTAINER DE TELAS -->
+    </div> <!-- FIM DO CONTAINER DE TELAS -->
+  </div> <!-- FIM DA ÁREA DE ROLAGEM -->
 
 </div>
 
 <script>
-  function mudarTela(idTela) {
+  let historicoTelas = [];
+
+  function mudarTela(idTelaDestino, idTelaAtual) {
+    if (idTelaAtual) {
+      historicoTelas.push(idTelaAtual);
+    }
+
     const telas = document.querySelectorAll('.conteudo-tela');
     telas.forEach(tela => tela.classList.add('escondido'));
-    document.getElementById(idTela).classList.remove('escondido');
+    document.getElementById(idTelaDestino).classList.remove('escondido');
+    
+    const btnVoltarTopo = document.getElementById('btn-voltar-topo');
+    if (idTelaDestino === 'tela-principal') {
+      btnVoltarTopo.classList.add('escondido');
+      historicoTelas = [];
+    } else {
+      btnVoltarTopo.classList.remove('escondido');
+    }
+
+    document.querySelector('.area-rolagem').scrollTop = 0;
+  }
+
+  function voltarTelaAnterior() {
+    if (historicoTelas.length > 0) {
+      const ultimaTela = historicoTelas.pop();
+      const telas = document.querySelectorAll('.conteudo-tela');
+      telas.forEach(tela => tela.classList.add('escondido'));
+      document.getElementById(ultimaTela).classList.remove('escondido');
+
+      if (ultimaTela === 'tela-principal') {
+        document.getElementById('btn-voltar-topo').classList.add('escondido');
+      }
+    } else {
+      mudarTela('tela-principal');
+    }
+    document.querySelector('.area-rolagem').scrollTop = 0;
   }
 
   function buscarCliente() {
     const usuario = document.getElementById('input-usuario').value.trim();
     if (usuario) {
-      window.location.href = `./clientes/${usuario}.html`;
+      window.location.href = `./${usuario}.html`;
     } else {
       alert("Por favor, digite seu código de usuário.");
     }
