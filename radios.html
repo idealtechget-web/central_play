@@ -23,6 +23,7 @@
             --text-light: #cbd5e1;
             --text-muted: #94a3b8;
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --danger: #ef4444; /* Vermelho para erros */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -151,7 +152,11 @@
             padding: 10px;
         }
 
-        /* ===== CONTROLES (PLAY E VOLUME) ===== */
+        /* ===== CONTROLES E STATUS ===== */
+        .controls-wrapper {
+            margin-bottom: 2rem;
+        }
+
         .controls {
             display: flex;
             align-items: center;
@@ -160,8 +165,22 @@
             padding: 15px 20px;
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            margin-bottom: 2rem;
         }
+
+        /* Feedback de Erro */
+        .error-message {
+            color: var(--danger);
+            font-size: 0.75rem;
+            margin-top: 10px;
+            font-weight: 600;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
         .play-btn {
             background: var(--primary);
@@ -184,6 +203,12 @@
             transform: scale(1.05);
             box-shadow: 0 8px 20px rgba(59, 130, 246, 0.6);
         }
+
+        /* Animação do Loading */
+        .spin {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
         .volume-container {
             display: flex;
@@ -246,10 +271,6 @@
             border-color: rgba(255, 255, 255, 0.1);
         }
 
-        .btn-voltar i {
-            font-size: 1.1rem;
-        }
-
         footer {
             margin-top: 2rem;
             font-size: 0.65rem;
@@ -258,7 +279,6 @@
             text-align: center;
             font-weight: 600;
         }
-
     </style>
 </head>
 <body>
@@ -269,7 +289,6 @@
     <!-- Card do Player -->
     <div class="player-card" id="playerWrapper">
         
-        <!-- Header / Logo -->
         <div class="logo">IDEAL<span>TECH</span></div>
         <div class="sub-logo">Rádio Web</div>
 
@@ -282,36 +301,43 @@
         <div class="station-group">
             <label for="stationSelect">Estação Atual</label>
             <select class="radio-select" id="stationSelect">
-                <option value="http://uk7.internet-radio.com:8022/;" selected>Groove & Funk (UK7)</option>
-                <option value="https://az1.mediacp.eu:443/100coverslounge">100 Covers Lounge</option>
-                <option value="http://stream1.dancewave.online:8080/dance.mp3">Dance Attack (Electro)</option>
-                <option value="http://us4.internet-radio.com:8076/;">House & Dance (US4)</option>
-                <option value="http://uk7.internet-radio.com:8151/;">Música Eletrônica/Lounge</option>
-                <option value="https://play.streamafrica.net/lofiradio">Office & Foco (Lo-Fi)</option>
-                <option value="https://stream.nightride.fm/nightride.m4a">Synthwave (Hacker Vibe)</option>
-                <option value="https://stream.ibizaglobalradio.com/ibizaglobalradio.mp3">Ibiza Global (House)</option>
+                <!-- Mantivemos as opções. Lembre-se do bloqueio de HTTP em sites HTTPS. -->
+                <option value="https://play.streamafrica.net/lofiradio" selected>Office & Foco (HTTPS)</option>
+                <option value="https://az1.mediacp.eu:443/100coverslounge">100 Covers Lounge (HTTPS)</option>
+                <option value="https://stream.ibizaglobalradio.com/ibizaglobalradio.mp3">Ibiza Global House (HTTPS)</option>
+                <option value="https://stream.nightride.fm/nightride.m4a">Synthwave Vibe (HTTPS)</option>
+                <option value="http://uk7.internet-radio.com:8022/;">Groove & Funk (UK7 - HTTP)</option>
+                <option value="http://stream1.dancewave.online:8080/dance.mp3">Dance Attack (HTTP)</option>
+                <option value="http://us4.internet-radio.com:8076/;">House & Dance (US4 - HTTP)</option>
+                <option value="http://uk7.internet-radio.com:8151/;">Música Eletrônica (UK7 - HTTP)</option>
             </select>
         </div>
 
         <!-- Controles de Áudio -->
-        <div class="controls">
-            <button class="play-btn" id="playBtn" title="Play/Pause">
-                <i class="ph ph-play" id="playIcon"></i>
-            </button>
-            
-            <div class="volume-container">
-                <i class="ph ph-speaker-low volume-icon"></i>
-                <input type="range" id="volumeControl" class="volume-slider" min="0" max="1" step="0.01" value="0.1" title="Volume">
+        <div class="controls-wrapper">
+            <div class="controls">
+                <button class="play-btn" id="playBtn" title="Play/Pause">
+                    <i class="ph ph-play" id="playIcon"></i>
+                </button>
+                
+                <div class="volume-container">
+                    <i class="ph ph-speaker-low volume-icon"></i>
+                    <input type="range" id="volumeControl" class="volume-slider" min="0" max="1" step="0.01" value="0.1" title="Volume">
+                </div>
+            </div>
+            <!-- Div para mensagens de Erro -->
+            <div id="errorMsg" class="error-message">
+                <i class="ph ph-warning-circle"></i> Erro: Rádio offline ou bloqueada pelo navegador.
             </div>
         </div>
 
-        <!-- Botão Voltar para o HUB -->
+        <!-- Botão Voltar -->
         <a href="#" onclick="window.close(); return false;" class="btn-voltar">
             <i class="ph ph-arrow-left"></i> Voltar ao Hub
         </a>
 
         <!-- Tag de Áudio Oculta -->
-        <audio id="audioStream" src="http://uk7.internet-radio.com:8022/;" preload="auto" autoplay></audio>
+        <audio id="audioStream" preload="none"></audio>
 
     </div>
 
@@ -326,16 +352,17 @@
         const stationSelect = document.getElementById('stationSelect');
         const playerWrapper = document.getElementById('playerWrapper');
         const volumeControl = document.getElementById('volumeControl');
+        const errorMsg = document.getElementById('errorMsg');
         
         let isPlaying = false;
         
-        // Volume travado em 10%
+        // Inicializa áudio e rádio padrão
         audio.volume = 0.1;
+        audio.src = stationSelect.value;
 
         // Atualiza volume e ícone visual
         volumeControl.addEventListener('input', (e) => { 
             audio.volume = e.target.value; 
-            
             const volIcon = document.querySelector('.volume-icon');
             if(audio.volume == 0) {
                 volIcon.className = "ph ph-speaker-x volume-icon";
@@ -346,65 +373,87 @@
             }
         });
 
+        // Função de Reset UI
+        const resetUI = () => {
+            playIcon.className = 'ph ph-play';
+            playerWrapper.classList.remove('playing');
+            isPlaying = false;
+        };
+
         // Função Iniciar
         const iniciarRadio = () => {
-            if (!isPlaying) {
+            errorMsg.style.display = 'none'; // Limpa erro anterior
+            playIcon.className = 'ph ph-spinner-gap spin'; // Coloca ícone de loading girando
+            
+            if (audio.src !== stationSelect.value) {
                 audio.src = stationSelect.value;
-                audio.play().then(() => {
-                    isPlaying = true;
-                    playIcon.className = 'ph ph-pause';
-                    playerWrapper.classList.add('playing');
-                }).catch(() => {
-                    console.log("Aguardando interação para iniciar rádio.");
-                });
             }
+
+            audio.play().catch(err => {
+                console.log("Aguardando interação ou erro de rede.");
+                // Erros críticos reais cairão no evento 'error' abaixo.
+            });
         };
 
         // Função Pausar
         const pausarRadio = () => {
             audio.pause(); 
-            audio.src = ''; // Limpa o buffer
-            isPlaying = false;
-            playIcon.className = 'ph ph-play'; 
-            playerWrapper.classList.remove('playing');
+            resetUI();
         };
 
-        // Evento de Clique no Botão Play
+        // Botão de Play/Pause
         playBtn.addEventListener('click', () => {
-            if (!isPlaying) {
+            if (!isPlaying && audio.paused) {
                 iniciarRadio();
             } else {
                 pausarRadio();
             }
         });
 
-        // Trocar de Rádio
+        // Trocar Rádio
         stationSelect.addEventListener('change', () => {
-            if (isPlaying) { 
-                audio.src = stationSelect.value; 
-                audio.play(); 
-            }
+            resetUI();
+            errorMsg.style.display = 'none';
+            iniciarRadio(); // Tenta iniciar a nova na hora
         });
 
-        // Autoplay Inteligente (Gatilhos estendidos para incluir mousemove e scroll)
-        window.addEventListener('DOMContentLoaded', () => { 
-            setTimeout(iniciarRadio, 500); 
-        });
+        // ==============================================
+        // EVENTOS DO ÁUDIO (FEEDBACK VISUAL DE LOADING E ERRO)
+        // ==============================================
         
-        const eventosInteracao = ['click', 'touchstart', 'keydown', 'mousemove', 'wheel'];
+        // Quando está pensando/carregando
+        audio.addEventListener('waiting', () => {
+            playIcon.className = 'ph ph-spinner-gap spin';
+            playerWrapper.classList.remove('playing');
+        });
 
-        const iniciarAoInteragir = () => {
-            if (!isPlaying && audio.paused) {
+        // Quando efetivamente começou a tocar
+        audio.addEventListener('playing', () => {
+            isPlaying = true;
+            playIcon.className = 'ph ph-pause';
+            playerWrapper.classList.add('playing');
+            errorMsg.style.display = 'none';
+        });
+
+        // Quando ocorre um erro na rede ou bloqueio de HTTP
+        audio.addEventListener('error', () => {
+            resetUI();
+            errorMsg.style.display = 'flex'; // Exibe a mensagem
+        });
+
+        // ==============================================
+        // AUTOPLAY INTELIGENTE
+        // ==============================================
+        const iniciarAoInteragir = (e) => {
+            if (!isPlaying && audio.paused && e.target.tagName !== 'INPUT' && e.target.tagName !== 'SELECT') {
                 iniciarRadio();
             }
-            // Remove listeners após o primeiro acionamento para economizar memória
-            eventosInteracao.forEach(evento => {
+            ['click', 'touchstart', 'keydown', 'mousemove', 'wheel'].forEach(evento => {
                 window.removeEventListener(evento, iniciarAoInteragir);
             });
         };
 
-        // Adiciona ouvintes a múltiplas interações
-        eventosInteracao.forEach(evento => {
+        ['click', 'touchstart', 'keydown', 'mousemove', 'wheel'].forEach(evento => {
             window.addEventListener(evento, iniciarAoInteragir, { once: true });
         });
     </script>
@@ -434,6 +483,7 @@
             --text-light: #cbd5e1;
             --text-muted: #94a3b8;
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --danger: #ef4444; /* Vermelho para erros */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -562,7 +612,11 @@
             padding: 10px;
         }
 
-        /* ===== CONTROLES (PLAY E VOLUME) ===== */
+        /* ===== CONTROLES E STATUS ===== */
+        .controls-wrapper {
+            margin-bottom: 2rem;
+        }
+
         .controls {
             display: flex;
             align-items: center;
@@ -571,8 +625,22 @@
             padding: 15px 20px;
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            margin-bottom: 2rem;
         }
+
+        /* Feedback de Erro */
+        .error-message {
+            color: var(--danger);
+            font-size: 0.75rem;
+            margin-top: 10px;
+            font-weight: 600;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
         .play-btn {
             background: var(--primary);
@@ -595,6 +663,12 @@
             transform: scale(1.05);
             box-shadow: 0 8px 20px rgba(59, 130, 246, 0.6);
         }
+
+        /* Animação do Loading */
+        .spin {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
         .volume-container {
             display: flex;
@@ -657,10 +731,6 @@
             border-color: rgba(255, 255, 255, 0.1);
         }
 
-        .btn-voltar i {
-            font-size: 1.1rem;
-        }
-
         footer {
             margin-top: 2rem;
             font-size: 0.65rem;
@@ -669,7 +739,6 @@
             text-align: center;
             font-weight: 600;
         }
-
     </style>
 </head>
 <body>
@@ -680,7 +749,6 @@
     <!-- Card do Player -->
     <div class="player-card" id="playerWrapper">
         
-        <!-- Header / Logo -->
         <div class="logo">IDEAL<span>TECH</span></div>
         <div class="sub-logo">Rádio Web</div>
 
@@ -693,36 +761,43 @@
         <div class="station-group">
             <label for="stationSelect">Estação Atual</label>
             <select class="radio-select" id="stationSelect">
-                <option value="http://uk7.internet-radio.com:8022/;" selected>Groove & Funk (UK7)</option>
-                <option value="https://az1.mediacp.eu:443/100coverslounge">100 Covers Lounge</option>
-                <option value="http://stream1.dancewave.online:8080/dance.mp3">Dance Attack (Electro)</option>
-                <option value="http://us4.internet-radio.com:8076/;">House & Dance (US4)</option>
-                <option value="http://uk7.internet-radio.com:8151/;">Música Eletrônica/Lounge</option>
-                <option value="https://play.streamafrica.net/lofiradio">Office & Foco (Lo-Fi)</option>
-                <option value="https://stream.nightride.fm/nightride.m4a">Synthwave (Hacker Vibe)</option>
-                <option value="https://stream.ibizaglobalradio.com/ibizaglobalradio.mp3">Ibiza Global (House)</option>
+                <!-- Mantivemos as opções. Lembre-se do bloqueio de HTTP em sites HTTPS. -->
+                <option value="https://play.streamafrica.net/lofiradio" selected>Office & Foco (HTTPS)</option>
+                <option value="https://az1.mediacp.eu:443/100coverslounge">100 Covers Lounge (HTTPS)</option>
+                <option value="https://stream.ibizaglobalradio.com/ibizaglobalradio.mp3">Ibiza Global House (HTTPS)</option>
+                <option value="https://stream.nightride.fm/nightride.m4a">Synthwave Vibe (HTTPS)</option>
+                <option value="http://uk7.internet-radio.com:8022/;">Groove & Funk (UK7 - HTTP)</option>
+                <option value="http://stream1.dancewave.online:8080/dance.mp3">Dance Attack (HTTP)</option>
+                <option value="http://us4.internet-radio.com:8076/;">House & Dance (US4 - HTTP)</option>
+                <option value="http://uk7.internet-radio.com:8151/;">Música Eletrônica (UK7 - HTTP)</option>
             </select>
         </div>
 
         <!-- Controles de Áudio -->
-        <div class="controls">
-            <button class="play-btn" id="playBtn" title="Play/Pause">
-                <i class="ph ph-play" id="playIcon"></i>
-            </button>
-            
-            <div class="volume-container">
-                <i class="ph ph-speaker-low volume-icon"></i>
-                <input type="range" id="volumeControl" class="volume-slider" min="0" max="1" step="0.01" value="0.1" title="Volume">
+        <div class="controls-wrapper">
+            <div class="controls">
+                <button class="play-btn" id="playBtn" title="Play/Pause">
+                    <i class="ph ph-play" id="playIcon"></i>
+                </button>
+                
+                <div class="volume-container">
+                    <i class="ph ph-speaker-low volume-icon"></i>
+                    <input type="range" id="volumeControl" class="volume-slider" min="0" max="1" step="0.01" value="0.1" title="Volume">
+                </div>
+            </div>
+            <!-- Div para mensagens de Erro -->
+            <div id="errorMsg" class="error-message">
+                <i class="ph ph-warning-circle"></i> Erro: Rádio offline ou bloqueada pelo navegador.
             </div>
         </div>
 
-        <!-- Botão Voltar para o HUB -->
+        <!-- Botão Voltar -->
         <a href="#" onclick="window.close(); return false;" class="btn-voltar">
             <i class="ph ph-arrow-left"></i> Voltar ao Hub
         </a>
 
         <!-- Tag de Áudio Oculta -->
-        <audio id="audioStream" src="http://uk7.internet-radio.com:8022/;" preload="auto" autoplay></audio>
+        <audio id="audioStream" preload="none"></audio>
 
     </div>
 
@@ -737,16 +812,17 @@
         const stationSelect = document.getElementById('stationSelect');
         const playerWrapper = document.getElementById('playerWrapper');
         const volumeControl = document.getElementById('volumeControl');
+        const errorMsg = document.getElementById('errorMsg');
         
         let isPlaying = false;
         
-        // Volume travado em 10%
+        // Inicializa áudio e rádio padrão
         audio.volume = 0.1;
+        audio.src = stationSelect.value;
 
         // Atualiza volume e ícone visual
         volumeControl.addEventListener('input', (e) => { 
             audio.volume = e.target.value; 
-            
             const volIcon = document.querySelector('.volume-icon');
             if(audio.volume == 0) {
                 volIcon.className = "ph ph-speaker-x volume-icon";
@@ -757,65 +833,87 @@
             }
         });
 
+        // Função de Reset UI
+        const resetUI = () => {
+            playIcon.className = 'ph ph-play';
+            playerWrapper.classList.remove('playing');
+            isPlaying = false;
+        };
+
         // Função Iniciar
         const iniciarRadio = () => {
-            if (!isPlaying) {
+            errorMsg.style.display = 'none'; // Limpa erro anterior
+            playIcon.className = 'ph ph-spinner-gap spin'; // Coloca ícone de loading girando
+            
+            if (audio.src !== stationSelect.value) {
                 audio.src = stationSelect.value;
-                audio.play().then(() => {
-                    isPlaying = true;
-                    playIcon.className = 'ph ph-pause';
-                    playerWrapper.classList.add('playing');
-                }).catch(() => {
-                    console.log("Aguardando interação para iniciar rádio.");
-                });
             }
+
+            audio.play().catch(err => {
+                console.log("Aguardando interação ou erro de rede.");
+                // Erros críticos reais cairão no evento 'error' abaixo.
+            });
         };
 
         // Função Pausar
         const pausarRadio = () => {
             audio.pause(); 
-            audio.src = ''; // Limpa o buffer
-            isPlaying = false;
-            playIcon.className = 'ph ph-play'; 
-            playerWrapper.classList.remove('playing');
+            resetUI();
         };
 
-        // Evento de Clique no Botão Play
+        // Botão de Play/Pause
         playBtn.addEventListener('click', () => {
-            if (!isPlaying) {
+            if (!isPlaying && audio.paused) {
                 iniciarRadio();
             } else {
                 pausarRadio();
             }
         });
 
-        // Trocar de Rádio
+        // Trocar Rádio
         stationSelect.addEventListener('change', () => {
-            if (isPlaying) { 
-                audio.src = stationSelect.value; 
-                audio.play(); 
-            }
+            resetUI();
+            errorMsg.style.display = 'none';
+            iniciarRadio(); // Tenta iniciar a nova na hora
         });
 
-        // Autoplay Inteligente (Gatilhos estendidos para incluir mousemove e scroll)
-        window.addEventListener('DOMContentLoaded', () => { 
-            setTimeout(iniciarRadio, 500); 
-        });
+        // ==============================================
+        // EVENTOS DO ÁUDIO (FEEDBACK VISUAL DE LOADING E ERRO)
+        // ==============================================
         
-        const eventosInteracao = ['click', 'touchstart', 'keydown', 'mousemove', 'wheel'];
+        // Quando está pensando/carregando
+        audio.addEventListener('waiting', () => {
+            playIcon.className = 'ph ph-spinner-gap spin';
+            playerWrapper.classList.remove('playing');
+        });
 
-        const iniciarAoInteragir = () => {
-            if (!isPlaying && audio.paused) {
+        // Quando efetivamente começou a tocar
+        audio.addEventListener('playing', () => {
+            isPlaying = true;
+            playIcon.className = 'ph ph-pause';
+            playerWrapper.classList.add('playing');
+            errorMsg.style.display = 'none';
+        });
+
+        // Quando ocorre um erro na rede ou bloqueio de HTTP
+        audio.addEventListener('error', () => {
+            resetUI();
+            errorMsg.style.display = 'flex'; // Exibe a mensagem
+        });
+
+        // ==============================================
+        // AUTOPLAY INTELIGENTE
+        // ==============================================
+        const iniciarAoInteragir = (e) => {
+            if (!isPlaying && audio.paused && e.target.tagName !== 'INPUT' && e.target.tagName !== 'SELECT') {
                 iniciarRadio();
             }
-            // Remove listeners após o primeiro acionamento para economizar memória
-            eventosInteracao.forEach(evento => {
+            ['click', 'touchstart', 'keydown', 'mousemove', 'wheel'].forEach(evento => {
                 window.removeEventListener(evento, iniciarAoInteragir);
             });
         };
 
-        // Adiciona ouvintes a múltiplas interações
-        eventosInteracao.forEach(evento => {
+        ['click', 'touchstart', 'keydown', 'mousemove', 'wheel'].forEach(evento => {
             window.addEventListener(evento, iniciarAoInteragir, { once: true });
         });
     </script>
