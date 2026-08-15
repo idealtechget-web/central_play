@@ -44,7 +44,7 @@
       width: 100%;
       max-width: 1200px;
       display: flex;
-      justify-content: flex-end; /* Alterado para alinhar o relógio à direita */
+      justify-content: flex-end;
       align-items: center;
       margin-bottom: 2vh;
       gap: 10px;
@@ -329,6 +329,19 @@
     .aviso-codigo.erro { color: #f87171; }
     .aviso-codigo.oculto { display: none; }
 
+    /* Dica visual para usuário */
+    .dica-usuario {
+      font-size: 0.75rem;
+      color: #64748b;
+      text-align: center;
+      font-style: italic;
+      margin-top: -4px;
+      margin-bottom: 12px;
+    }
+    .dica-usuario strong {
+      color: var(--text-muted);
+    }
+
     .escondido { display: none !important; }
 
     /* ===== RESPONSIVIDADE ===== */
@@ -585,12 +598,22 @@
         </a>
       </div>
 
-      <!-- ================= TELA 4: RENOVAÇÃO / CONSULTA ================= -->
+      <!-- ================= TELA 4: RENOVAÇÃO / CONSULTA (ATUALIZADA) ================= -->
       <div id="tela-renovar" class="conteudo-tela escondido">
         <h3 style="font-size: 1.1rem; margin-bottom: 5px;">Consultar Usuário</h3>
-        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px;">Digite seu usuário para acessar o painel de renovação:</p>
-        <input type="text" id="input-usuario" placeholder="Ex: 160837199" maxlength="20">
-        <button class="btn btn-destaque" onclick="buscarCliente()" style="justify-content: center;">🔍 PESQUISAR PAINEL</button>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px;">Digite seu código de usuário abaixo para acessar seu painel de renovação e credenciais:</p>
+        
+        <input type="text" id="input-usuario" placeholder="Ex: 471234" maxlength="20" onkeypress="verificarEnter(event)">
+        
+        <div class="dica-usuario">
+          💡 Dica: Seu acesso é o <strong>DDD + os 4 últimos dígitos</strong> do seu telefone.
+        </div>
+        
+        <button class="btn btn-destaque" onclick="buscarCliente()" style="justify-content: center;">🔍 ACESSAR PAINEL</button>
+
+        <a href="https://wa.me/5547996315851?text=Olá!%20Esqueci%20meu%20código%20de%20usuário,%20poderia%20me%20ajudar?" target="_blank" class="btn-esqueci-dados">
+          🤔 Não sei meu usuário / Esqueci meus dados
+        </a>
       </div>
 
     </div>
@@ -653,18 +676,26 @@
     }
   };
 
+  // ===== FUNÇÕES DE BUSCA =====
   window.buscarCliente = function() {
     const usuario = document.getElementById('input-usuario').value.trim();
     if (!usuario) { alert('⚠️ Por favor, digite seu código de usuário.'); return; }
     const btn = document.querySelector('#tela-renovar .btn-destaque');
     const originalText = btn.innerHTML;
-    btn.innerHTML = '⏳ Carregando...'; btn.disabled = true;
+    btn.innerHTML = '⏳ Localizando...'; btn.disabled = true;
     setTimeout(() => {
       window.location.href = `./clientes/${usuario}.html`;
       btn.innerHTML = originalText; btn.disabled = false;
     }, 400);
   };
 
+  window.verificarEnter = function(event) {
+    if (event.key === 'Enter') {
+      window.buscarCliente();
+    }
+  };
+
+  // ===== FUNÇÃO CÓDIGO DE INDICAÇÃO =====
   window.validarCodigo = function() {
     const input = document.getElementById('codigo-indicacao');
     const btn = document.getElementById('btn-enviar-indicacao');
